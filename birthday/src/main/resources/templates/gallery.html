@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерия</title>
+    <link rel="stylesheet" href="/css/gallery.css">
+    <script src="/js/gallery.js" defer></script>
+    </head>
+<body>
+<div class="container">
+    <div class="toprow">
+        <a href="/" class="back-btn">← Назад</a>
+        <h1>Галерия</h1>
+    </div>
+    <div class="grid">
+        <!-- Iterate wishes and show images (no visible text/captions) -->
+        <th:block th:each="wish : ${wishes}">
+            <button type="button" class="thumb" th:attr="data-full=${wish.imagePath}" aria-label="Отвори снимка">
+                <img th:src="${wish.imagePath}" alt=""/>
+            </button>
+        </th:block>
+    </div>
+</div>
+
+<!-- Fullscreen modal -->
+<div id="lightbox" class="lightbox" aria-hidden="true">
+    <button id="closeBtn" class="close" aria-label="Затвори визуализация">×</button>
+    <img id="lightboxImg" src="" alt=""/>
+    <button id="prev" class="nav" aria-label="Предишна">‹</button>
+    <button id="next" class="nav" aria-label="Следваща">›</button>
+    <div class="lightbox-meta" aria-hidden="true"></div>
+</div>
+
+</body>
+</html>

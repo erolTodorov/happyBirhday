@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Събитието</title>
+    <style>
+        :root {
+            --pink: #ff5d8f;
+            --pink-dark: #d94b76;
+            --orange: #ffb347;
+            --cream: #fff8f3;
+            --text: #4a3c45;
+            --muted: #7d6d76;
+            --card: #ffffff;
+            --border: #f2dfe7;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            margin: 0;
+            background:
+                radial-gradient(circle at top left, rgba(255, 93, 143, 0.16), transparent 24%),
+                linear-gradient(135deg, #fff8f3 0%, #ffeef5 100%);
+            color: var(--text);
+        }
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 24px 18px 48px;
+        }
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--pink), #ff7d77 35%, var(--orange));
+            color: white;
+            padding: 46px 24px;
+            border-radius: 28px;
+            text-align: center;
+            box-shadow: 0 18px 45px rgba(255, 93, 143, 0.28);
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.25), transparent 35%);
+            pointer-events: none;
+        }
+        .hero > * { position: relative; z-index: 1; }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            font-size: 0.82rem;
+        }
+        .hero h1 { font-size: 2.35rem; margin: 0 0 10px; }
+        .hero p { font-size: 1.08rem; margin: 8px auto 0; max-width: 700px; opacity: 0.97; }
+        .birthday-info {
+            font-size: 1.08rem;
+            font-weight: 700;
+            margin-top: 16px;
+            display: inline-block;
+            background: rgba(255,255,255,0.18);
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.24);
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 24px;
+            margin-top: 22px;
+            box-shadow: 0 10px 28px rgba(0,0,0,0.07);
+        }
+        .card h2 { margin-top: 0; color: var(--pink-dark); font-size: 1.45rem; }
+        .card-intro {
+            color: var(--muted);
+            margin-top: -4px;
+            margin-bottom: 16px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 18px;
+        }
+        .photo-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .photo-card:hover { transform: translateY(-4px); box-shadow: 0 12px 22px rgba(0,0,0,0.09); }
+        .photo-card img { width: 100%; height: 230px; object-fit: cover; display: block; }
+        .photo-card a {
+            display: block;
+            text-align: center;
+            padding: 12px 12px;
+            color: var(--pink-dark);
+            text-decoration: none;
+            font-weight: 700;
+            background: #fff7fb;
+        }
+        .wish-text { padding: 12px; background: #fff7fb; color: var(--text); border-top: 1px solid var(--border); }
+        .wish-text p { margin: 0; }
+        .wish-text p:first-child { color: var(--muted); }
+        .form-group { margin-bottom: 12px; }
+        input, textarea, button {
+            width: 100%;
+            padding: 13px 14px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            font-size: 15px;
+            outline: none;
+        }
+        input:focus, textarea:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,93,143,0.15); }
+        button {
+            background: linear-gradient(135deg, var(--pink), var(--orange));
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            box-shadow: 0 10px 22px rgba(255, 93, 143, 0.22);
+        }
+        button:hover { filter: brightness(1.03); }
+        .alert {
+            padding: 12px 14px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+        .alert-success { background: #eefbf2; color: #2f7d47; }
+        .alert-error { background: #fff0f2; color: #b63b57; }
+        .admin-link { text-align: right; margin-bottom: 16px; }
+        .admin-link a {
+            color: var(--pink-dark);
+            text-decoration: none;
+            font-weight: 800;
+            background: rgba(255,255,255,0.8);
+            padding: 8px 12px;
+            border-radius: 999px;
+            display: inline-block;
+            border: 1px solid var(--border);
+        }
+        @media (max-width: 600px) {
+            .hero { padding: 32px 18px; }
+            .hero h1 { font-size: 1.75rem; }
+            .card { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="admin-link"><a href="/admin">Админ вход</a> &nbsp; <a href="/gallery">Галерия</a></div>
+    <div class="hero">
+        <div class="hero-badge">🎉 Специален ден</div>
+        <h1>Пожелания, снимки и много усмивки</h1>
+        <p>Качи своята снимка, напиши красиво пожелание и създай празнична галерия за всички.</p>
+        <div class="birthday-info">Рожденници: Андрияна — 30 години и Ерол — 32 години</div>
+    </div>
+
+    <div class="card">
+        <h2>Качи свое пожелание</h2>
+        <div class="card-intro">Попълни формата по-долу и сподели своя поздрав с рождениците.</div>
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+        <form th:action="@{/wishes}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="text" name="name" placeholder="Твоето име" required>
+            </div>
+            <div class="form-group">
+                <textarea name="message" rows="4" placeholder="Напиши своето пожелание" required></textarea>
+            </div>
+            <div class="form-group">
+                <input type="file" name="images" accept="image/*" multiple required>
+            </div>
+            <div class="form-group visibility">
+                <label style="font-weight:700;display:block;margin-bottom:6px;width:100%;text-align:center">Към кого е поздрава?</label>
+                <div style="display:flex;justify-content:center;gap:18px;align-items:center">
+                    <label style="margin-right:12px"><input type="radio" name="visible" value="false"> Към рожденниците (частно)</label>
+                    <label><input type="radio" name="visible" value="true" checked> Видим за всички</label>
+                </div>
+            </div>
+            <button type="submit">Изпрати пожелание</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Снмики за сваляне</h2>
+        <div class="grid">
+            <div th:each="wish : ${wishes}" class="photo-card">
+                <img th:src="@{${wish.imagePath}}" alt="Снимка с поздрав">
+                <div class="wish-text" th:if="${wish.visibleToAll}">
+                    <p th:text="${wish.message}"></p>
+                    <p style="font-weight:700;margin-top:6px" th:text="'— ' + ${wish.name}"></p>
+                </div>
+                <a th:href="@{${wish.imagePath}}" download>Свали снимката</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

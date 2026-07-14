@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ панел</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 24px; background: #f8f8f8; }
+        .card { background: white; padding: 16px; border-radius: 12px; margin-bottom: 16px; }
+        img { width: 160px; height: 120px; object-fit: cover; border-radius: 8px; }
+        button { background: #2e7d32; color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+<h1>Админ панел</h1>
+<a href="/">← Обратно към сайта</a>
+<div th:each="wish : ${wishes}" class="card">
+    <img th:src="@{${wish.imagePath}}" alt="Снимка">
+    <h3 th:text="${wish.name}"></h3>
+    <p th:text="${wish.message}"></p>
+    <p><strong>Видимо за всички потребители</strong></p>
+</div>
+</body>
+</html>

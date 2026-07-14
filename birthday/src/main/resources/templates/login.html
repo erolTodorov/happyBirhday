@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход за админ</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #fff8f3; }
+        .box { background: white; padding: 24px; border-radius: 16px; width: 320px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        input, button { width: 100%; padding: 10px; margin-top: 10px; border-radius: 8px; border: 1px solid #ddd; }
+        button { background: #ff7aa2; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>Админ вход</h2>
+    <form th:action="@{/login}" method="post">
+        <input type="text" name="username" placeholder="Потребителско име" required>
+        <input type="password" name="password" placeholder="Парола" required>
+        <button type="submit">Влез</button>
+    </form>
+</div>
+</body>
+</html>
