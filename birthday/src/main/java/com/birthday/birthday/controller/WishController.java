@@ -2,10 +2,8 @@ package com.birthday.birthday.controller;
 
 import com.birthday.birthday.model.Wish;
 import com.birthday.birthday.service.WishService;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
