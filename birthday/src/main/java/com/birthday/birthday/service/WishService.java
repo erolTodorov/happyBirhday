@@ -13,6 +13,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 @Service
 public class WishService {
 
@@ -72,5 +74,20 @@ public class WishService {
         Wish wish = wishRepository.findById(id).orElseThrow();
         wish.setApproved(true);
         return wishRepository.save(wish);
+    }
+
+    public void deleteWish(Long id) throws IOException {
+        Wish wish = wishRepository.findById(id).orElseThrow();
+
+        String imagePath = wish.getImagePath();
+        if (imagePath != null && !imagePath.isBlank()) {
+            String fileName = Paths.get(imagePath).getFileName().toString();
+            if (fileName != null && !fileName.isBlank()) {
+                Path targetPath = uploadDirectory.resolve(fileName).normalize();
+                Files.deleteIfExists(targetPath);
+            }
+        }
+
+        wishRepository.delete(wish);
     }
 }

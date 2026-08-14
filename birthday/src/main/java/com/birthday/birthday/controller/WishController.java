@@ -67,4 +67,14 @@ public class WishController {
         model.addAttribute("wishes", wishService.getApprovedWishes());
         return "gallery";
     }
+
+    @DeleteMapping("/admin/images/{id}")
+    public String deleteImage(@PathVariable Long id) {
+        try {
+            wishService.deleteWish(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Неуспешно изтриване на снимка", e);
+        }
+        return "redirect:/admin";
+    }
 }

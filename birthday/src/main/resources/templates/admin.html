@@ -18,6 +18,10 @@
     <h3 th:text="${wish.name}"></h3>
     <p th:text="${wish.message}"></p>
     <p><strong>Видимо за всички потребители</strong></p>
+    <form th:action="@{/admin/images/{id}(id=${wish.id})}" method="post">
+        <input type="hidden" name="_method" value="DELETE" />
+        <button type="submit" onclick="return confirm('Сигурни ли сте, че искате да изтриете тази снимка?');">Изтрий</button>
+    </form>
 </div>
 </body>
 </html>
